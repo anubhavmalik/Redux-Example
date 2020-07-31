@@ -1,0 +1,12 @@
+{
+  "name": "tryingredux",
+  "displayName": "tryingredux",
+  "expo": {
+    "name": "tryingredux",
+    "slug": "tryingredux",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
