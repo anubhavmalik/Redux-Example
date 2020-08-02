@@ -8,34 +8,26 @@ class CounterComponent extends Component {
     counter: 0,
   };
 
-  incrementCount = () => {
-    this.setState({ counter: this.state.counter + 1 });
-  };
-
-  decrementCount = () => {
-    this.setState({ counter: this.state.counter - 1 });
-  };
-
   render() {
     return (
       <View style={styles.container} width="100%">
         <TouchableOpacity>
           <Text
-            style={{ fontSize: 36 }}
+            style={styles.yolo}
             color="green"
-            onPress={this.incrementCount}
+            onPress={() => this.props.increaseCounter()}
           >
-            +
+            Increase
           </Text>
         </TouchableOpacity>
-        <Text style={{ fontSize: 80 }}>{this.state.counter}</Text>
+        <Text style={{ fontSize: 80 }}>{this.props.counter}</Text>
         <TouchableOpacity>
           <Text
-            style={{ fontSize: 36 }}
+            style={styles.yolo}
             color="red"
-            onPress={this.decrementCount}
+            onPress={() => this.props.decreaseCounter()}
           >
-            -
+            Decrease
           </Text>
         </TouchableOpacity>
       </View>
@@ -47,7 +39,14 @@ function mapStateToProps(state) {
   return { counter: state.counter };
 }
 
-export default connect(mapStateToProps)(CounterComponent);
+function mapDispatchToProps(dispatch) {
+  return {
+    increaseCounter: () => dispatch({ type: "INCREASE_COUNTER" }),
+    decreaseCounter: () => dispatch({ type: "DECREASE_COUNTER" }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CounterComponent);
 
 const styles = StyleSheet.create({
   container: {
@@ -71,11 +70,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   yolo: {
-    flex: 1,
-    flexWrap: "wrap",
-    fontSize: 80,
-    alignItems: "center",
-    justifyContent: "center",
+    fontSize: 18,
     color: "black",
   },
   touchables: {
