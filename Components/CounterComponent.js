@@ -1,42 +1,53 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { connect } from "react-redux";
 
-export function CounterComponent() {
-  const [text, setText] = useState(0);
-
-  const changeCount = (num, shouldIncrement) => {
-    if (shouldIncrement) {
-      setText(++num);
-    } else {
-      setText(--num);
-    }
+class CounterComponent extends Component {
+  state = {
+    counter: 0,
   };
 
-  const incrementCount = () => {
-    changeCount(parseInt(text), true);
+  incrementCount = () => {
+    this.setState({ counter: this.state.counter + 1 });
   };
 
-  const decrementCount = () => {
-    changeCount(parseInt(text), false);
+  decrementCount = () => {
+    this.setState({ counter: this.state.counter - 1 });
   };
 
-  return (
-    <View style={styles.container} width="100%">
-      <TouchableOpacity>
-        <Text style={{ fontSize: 36 }} color="green" onPress={incrementCount}>
-          +
-        </Text>
-      </TouchableOpacity>
-      <Text style={{ fontSize: 80 }}>{text}</Text>
-      <TouchableOpacity>
-        <Text style={{ fontSize: 36 }} color="red" onPress={decrementCount}>
-          -
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
+  render() {
+    return (
+      <View style={styles.container} width="100%">
+        <TouchableOpacity>
+          <Text
+            style={{ fontSize: 36 }}
+            color="green"
+            onPress={this.incrementCount}
+          >
+            +
+          </Text>
+        </TouchableOpacity>
+        <Text style={{ fontSize: 80 }}>{this.state.counter}</Text>
+        <TouchableOpacity>
+          <Text
+            style={{ fontSize: 36 }}
+            color="red"
+            onPress={this.decrementCount}
+          >
+            -
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
+
+function mapStateToProps(state) {
+  return { counter: state.counter };
+}
+
+export default connect(mapStateToProps)(CounterComponent);
 
 const styles = StyleSheet.create({
   container: {
